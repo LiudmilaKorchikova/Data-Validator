@@ -1,7 +1,7 @@
 package hexlet.code.schemas;
 
 
-public class NumberSchema extends BaseSchema<Integer> {
+public final class NumberSchema extends BaseSchema<Integer> {
     private boolean required;
 
     public NumberSchema required() {

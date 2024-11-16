@@ -1,6 +1,7 @@
 package hexlet.code;
 
 import hexlet.code.schemas.StringSchema;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -8,19 +9,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ValidatorStringSchemaTest {
 
-    @Test
-    public void testStringSchemaIsValid() {
-        Validator v = new Validator();
-        StringSchema schema = v.string();
+    private Validator v;
+    private StringSchema schema;
 
-        assertTrue(schema.isValid(""));
-        assertTrue(schema.isValid(null));
+    @BeforeEach
+    public void setUp() throws Exception {
+        v = new Validator();
+        schema = v.string();
     }
 
     @Test
     public void testStringSchemaRequired() {
-        Validator v = new Validator();
-        StringSchema schema = v.string().required();
+        assertTrue(schema.isValid(""));
+        assertTrue(schema.isValid(null));
+
+        schema.required();
 
         assertFalse(schema.isValid(""));
         assertFalse(schema.isValid(null));
@@ -29,23 +32,35 @@ public class ValidatorStringSchemaTest {
 
     @Test
     public void testStringSchemaContains() {
-        Validator v = new Validator();
-        StringSchema schema = v.string();
+        schema.contains("wh");
 
-        assertTrue(schema.contains("wh").isValid("what does the fox say"));
-        assertTrue(schema.contains("what").isValid("what does the fox say"));
-        assertFalse(schema.contains("whatthe").isValid("what does the fox say"));
+        assertTrue(schema.isValid("what does the fox say"));
+
+        schema.contains("what");
+
+        assertTrue(schema.isValid("what does the fox say"));
+
+        schema.contains("whatthe");
 
         assertFalse(schema.isValid("what does the fox say"));
     }
 
     @Test
     public void testStringSchemaMinLength() {
-        Validator v = new Validator();
-        StringSchema schema = v.string();
+        schema.minLength(4);
 
-        assertTrue(schema.minLength(4).isValid("what does the fox say"));
-        assertFalse(schema.minLength(4).isValid("aa"));
-        assertTrue(schema.minLength(10).minLength(4).isValid("Hexlet"));
+        assertTrue(schema.isValid("what does the fox say"));
+        assertFalse(schema.isValid("aa"));
+    }
+
+    @Test
+    public void testStringSchemaMultipleValidations() {
+        schema.minLength(10).contains("fox").minLength(4);
+
+        assertTrue(schema.isValid("what does the fox say"));
+
+        schema.minLength(4).contains("whatthe");
+
+        assertFalse(schema.isValid("what does the fox say"));
     }
 }

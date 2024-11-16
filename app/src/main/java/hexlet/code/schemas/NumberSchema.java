@@ -1,17 +1,14 @@
 package hexlet.code.schemas;
 
-
 public final class NumberSchema extends BaseSchema<Integer> {
-    private boolean required;
 
     public NumberSchema required() {
         addCheck(value -> value != null);
-        this.required = true;
         return this;
     }
 
     public NumberSchema positive() {
-        addCheck(value -> value == null ? !required : value > 0);
+        addCheck(value -> value == null || value > 0); // null проверяется сразу
         return this;
     }
 

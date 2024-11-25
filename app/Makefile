@@ -1,13 +1,13 @@
-.PHONY: build test checkstyle
+.PHONY: build test checkstyle report
 
 build:
-    ./gradlew build
+	./gradlew build
 
 test:
-    ./gradlew test
+	./gradlew test
 
 checkstyle:
-    ./gradlew checkstyleMain checkstyleTest
+	./gradlew checkstyleMain checkstyleTest
 
 report:
-    ./gradlew jacocoTestReport
+	./gradlew jacocoTestReport

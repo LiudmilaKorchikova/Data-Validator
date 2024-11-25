@@ -31,11 +31,13 @@ jobs:
         working-directory: app
         run: ./gradlew test
 
+      - name: Generate code coverage report
+        run: ./gradlew jacocoTestReport
+
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
         with:
-          coverageCommand: make report
-          coverageLocations: ${{github.workspace}}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+          coverageLocations: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
           JACOCO_SOURCE_PATH: ${{github.workspace}}/src/main/java

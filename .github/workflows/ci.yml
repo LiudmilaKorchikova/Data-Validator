@@ -31,6 +31,10 @@ jobs:
         working-directory: app
         run: ./gradlew test
 
+      - name: Run Make Report
+        working-directory: app
+        run: make report
+
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
         env:

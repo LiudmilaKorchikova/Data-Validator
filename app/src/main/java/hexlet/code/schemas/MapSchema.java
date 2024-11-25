@@ -2,47 +2,40 @@ package hexlet.code.schemas;
 
 import java.util.Map;
 
-public final class MapSchema<T> extends BaseSchema<Map<T, T>> {
+public final class MapSchema extends BaseSchema<Map<?, ?>> {
+    private Map<String, BaseSchema<String>> mapSchema;
 
     public MapSchema required() {
-        addCheck(value -> value != null && value instanceof Map);
+        addCheck("required", value -> value != null);
         return this;
     }
 
     public MapSchema sizeof(int size) {
-        addCheck(value -> value == null || value.size() == size);
+        addCheck("sizeOf", value -> value == null || value.size() == size);
         return this;
     }
 
-    public MapSchema shape(Map<String, BaseSchema<T>> newMapSchema) {
-        addCheck(value -> validate(value, newMapSchema));
+    public MapSchema shape(Map<String, BaseSchema<String>> newMapSchema) {
+        this.mapSchema = newMapSchema;
+        addCheck("shape", this::validate);
         return this;
     }
 
-    private boolean validate(Map<?, ?> map, Map<String, BaseSchema<T>> mapSchema) {
+    private <T> boolean validate(Map<?, ?> map) {
         if (map == null) {
             return true;
         }
 
-        for (Map.Entry<String, BaseSchema<T>> entry : mapSchema.entrySet()) {
+        for (Map.Entry<String, BaseSchema<String>> entry : this.mapSchema.entrySet()) {
             String key = entry.getKey();
-            BaseSchema<?> schema = entry.getValue();
+            BaseSchema<String> schema = entry.getValue();
             Object value = map.get(key);
+            String castValue = (String) value;
 
-            // Преобразуем значение value в тип T, чтобы корректно передать в isValid
-            if (!isValueValidForSchema(schema, value)) {
+            if (!schema.isValid(castValue)) {
                 return false;
             }
         }
         return true;
-    }
-
-    private <T> boolean isValueValidForSchema(BaseSchema<T> schema, Object value) {
-        try {
-            T castValue = (T) value;
-            return schema.isValid(castValue);
-        } catch (ClassCastException e) {
-            return false;
-        }
     }
 }

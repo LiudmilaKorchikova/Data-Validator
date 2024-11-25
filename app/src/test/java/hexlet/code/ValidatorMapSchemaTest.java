@@ -54,19 +54,18 @@ public final class ValidatorMapSchemaTest {
         assertTrue(schema.isValid(data));
     }
 
+    @Test
     public void testMapSchemaMultipleValidations() {
         var data = new HashMap<String, String>();
 
-        schema.sizeof(3).sizeof(2);
+        schema.required().sizeof(2);
+
+        assertFalse(schema.isValid(data));
 
         data.put("key1", "value1");
-        assertFalse(schema.isValid(data));
-
         data.put("key2", "value2");
-        assertTrue(schema.isValid(data));
 
-        data.put("key3", "value3");
-        assertFalse(schema.isValid(data));
+        assertTrue(schema.isValid(data));
     }
 
     @Test

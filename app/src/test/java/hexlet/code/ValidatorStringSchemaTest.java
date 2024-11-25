@@ -32,17 +32,11 @@ public final class ValidatorStringSchemaTest {
 
     @Test
     public void testStringSchemaContains() {
-        schema.contains("wh");
-
-        assertTrue(schema.isValid("what does the fox say"));
-
         schema.contains("what");
 
         assertTrue(schema.isValid("what does the fox say"));
-
-        schema.contains("whatthe");
-
-        assertFalse(schema.isValid("what does the fox say"));
+        assertTrue(schema.isValid("blablawhatbla"));
+        assertFalse(schema.isValid("blablabla"));
     }
 
     @Test

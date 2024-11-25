@@ -38,7 +38,7 @@ jobs:
       - name: Run tests and generate coverage
         working-directory: app
         run: |
-          ./gradlew test jacocoTestReport
+          make report
 
       - name: Upload coverage to CodeClimate
         env:

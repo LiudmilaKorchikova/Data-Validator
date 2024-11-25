@@ -35,11 +35,7 @@ jobs:
         working-directory: app
         run: make report
 
-      - name: Publish code coverage
-        uses: paambaati/codeclimate-action@v9.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-          JACOCO_SOURCE_PATH: ${{github.workspace}}/src/main/java
+      - name: Run Code Climate Analysis
+        uses: codeclimate-action/codeclimate-action@v9
         with:
-          coverageCommand: app/gradlew jacocoTestReport
-          coverageLocations: ${{github.workspace}}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+          token: ${{ secrets.CC_TEST_REPORTER_ID }}

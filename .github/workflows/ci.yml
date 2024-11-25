@@ -35,16 +35,11 @@ jobs:
         working-directory: app
         run: make report
 
-      - name: Run tests and generate coverage
-        run: |
-          make report
-
-      - name: Upload coverage to CodeClimate
+      - name: Publish code coverage
+        uses: paambaati/codeclimate-action@v9.0.0
         env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        run: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-          ./cc-test-reporter before-build
-          ./cc-test-reporter format-coverage /build/reports/jacoco/test/jacocoTestReport.xml -t jacoco --prefix $(pwd)
-          ./cc-test-reporter upload-coverage
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+          JACOCO_SOURCE_PATH: ${{github.workspace}}/app/src/main/java
+        with:
+          coverageCommand: make report
+          coverageLocations: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco

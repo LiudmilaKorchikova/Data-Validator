@@ -21,7 +21,7 @@ public final class MapSchema extends BaseSchema<Map<?, ?>> {
         return this;
     }
 
-    private <T> boolean validate(Map<?, ?> map) {
+    private boolean validate(Map<?, ?> map) {
         if (map == null) {
             return true;
         }

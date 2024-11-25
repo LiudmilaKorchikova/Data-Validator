@@ -43,11 +43,3 @@ jobs:
         with:
           coverageCommand: app/gradlew jacocoTestReport
           coverageLocations: ${{github.workspace}}build/app/reports/jacoco/test/jacocoTestReport.xml:jacoco
-
-      - name: Test Coverage Report
-        run: |
-        cd app
-        ./gradlew jacocoTestReport
-        ./cc-test-reporter after-build --exit-code $?
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

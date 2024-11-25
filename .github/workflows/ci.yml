@@ -35,6 +35,9 @@ jobs:
         working-directory: app
         run: make report
 
+      - name: Debug: Check JaCoCo Report Path
+        run: ls -R app/build/reports/jacoco/test
+
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
         env:

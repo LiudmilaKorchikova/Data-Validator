@@ -1,4 +1,4 @@
-Name: Java CI
+name: Java CI
 
 on:
   push:
@@ -14,9 +14,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-      
+        with:
+          java-version: '21'
+
       - uses: gradle/gradle-build-action@v3
         with:
           gradle-version: 8.5
@@ -29,10 +29,3 @@ jobs:
 
       - name: Run tests
         run: ./gradlew test
-
-          #- name: Test Coverage Report
-          #run:
-          #./gradlew jacocoTestReport
-          #./cc-test-reporter after-build --exit-code $?
-          #env:
-          #CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 public abstract class BaseSchema<T> {
-    // Используем Map для хранения валидаторов по типам
     private final Map<String, Predicate<T>> checks = new HashMap<>();
 
     /**
@@ -15,7 +14,6 @@ public abstract class BaseSchema<T> {
      * @param check the validation check to be added\
      */
     protected void addCheck(String key, Predicate<T> check) {
-        // Добавляем проверку с переданным ключом
         checks.put(key, check);
     }
 

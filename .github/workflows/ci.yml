@@ -35,9 +35,6 @@ jobs:
         working-directory: app
         run: make report
 
-      - name: Switch Directory
-        run: cd app
-
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
         env:

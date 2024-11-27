@@ -2,6 +2,7 @@ package hexlet.code.schemas;
 
 public final class StringSchema extends BaseSchema<String> {
 
+    @Override
     public StringSchema required() {
         addCheck("required", value -> value != null && !((String) value).isEmpty());
         return this;

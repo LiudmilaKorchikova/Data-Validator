@@ -3,10 +3,10 @@ package hexlet.code.schemas;
 import java.util.Map;
 
 public final class MapSchema extends BaseSchema<Map<?, ?>> {
-    private Map<String, BaseSchema<String>> mapSchema;
 
+    @Override
     public MapSchema required() {
-        addCheck("required", value -> value != null);
+        super.required();
         return this;
     }
 
@@ -16,17 +16,16 @@ public final class MapSchema extends BaseSchema<Map<?, ?>> {
     }
 
     public MapSchema shape(Map<String, BaseSchema<String>> newMapSchema) {
-        this.mapSchema = newMapSchema;
-        addCheck("shape", this::validate);
+        addCheck("shape", value -> validate(value, newMapSchema));
         return this;
     }
 
-    private boolean validate(Map<?, ?> map) {
+    private boolean validate(Map<?, ?> map, Map<String, BaseSchema<String>> newMapSchema) {
         if (map == null) {
             return true;
         }
 
-        for (Map.Entry<String, BaseSchema<String>> entry : this.mapSchema.entrySet()) {
+        for (Map.Entry<String, BaseSchema<String>> entry : newMapSchema.entrySet()) {
             String key = entry.getKey();
             BaseSchema<String> schema = entry.getValue();
             Object value = map.get(key);

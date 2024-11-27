@@ -2,8 +2,9 @@ package hexlet.code.schemas;
 
 public final class NumberSchema extends BaseSchema<Integer> {
 
+    @Override
     public NumberSchema required() {
-        addCheck("required", value -> value != null);
+        super.required();
         return this;
     }
 

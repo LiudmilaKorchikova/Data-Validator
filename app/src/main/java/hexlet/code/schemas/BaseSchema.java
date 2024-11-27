@@ -18,6 +18,16 @@ public abstract class BaseSchema<T> {
     }
 
     /**
+     * Marks the value as required. If the value is null, the validation fails.
+     * This method is now available for all schemas.
+     * @return the schema object itself for method chaining
+     */
+    public BaseSchema<T> required() {
+        addCheck("required", value -> value != null);
+        return this;
+    }
+
+    /**
      * Validates the given value. Subclasses should implement their own validation logic.
      *
      * @param value the value to be validated

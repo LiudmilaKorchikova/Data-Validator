@@ -2,8 +2,6 @@ An application that validates data against predefined criteria.
 
 Covered by tests.
 
-### Hexlet tests and linter status:
-[![Actions Status](https://github.com/LiudmilaKorchikova/java-project-78/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/LiudmilaKorchikova/java-project-78/actions)
 ### CI:
 ![Java CI](https://github.com/LiudmilaKorchikova/java-project-78/actions/workflows/ci.yml/badge.svg)
 ### Maintainability:
